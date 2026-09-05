@@ -2,7 +2,7 @@
 
 ## Architecture
 
-The glasses are a **wearable thin client**. The Jarvis brain stays on the desktop PC:
+The glasses are a 'wearable thin client'. The Jarvis brain stays on the desktop PC:
 
 - Glasses (ESP32-S3 XIAO Sense): capture mic audio, on-demand camera frames, on-demand heart rate; play TTS audio via bone conduction.
 - PC (Jarvis): STT (Google), the trained nanoGPT model, tools (weather, search, face rec via YOLO, memory, etc.), TTS (edge-tts). Streams synthesized audio back to the glasses.
