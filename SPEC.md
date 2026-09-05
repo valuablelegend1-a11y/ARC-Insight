@@ -32,11 +32,6 @@ The ESP32-S3 (512 KB SRAM) physically cannot run the Jarvis transformer, so no a
 
 Expected: ~1-2 days per charge with a couple hours of conversation per day.
 
-## Known gotchas
-
-1. **Sense camera is not power-gated** — RESET/PWDN tied to 3V3. Must `esp_camera_deinit()` before deep sleep or it can sit at ~90 mA. Consider a physical transistor power switch on the camera flex 3V3.
-2. **Wake latency** — Wi-Fi reconnect is ~0.3-0.7 s, so the first word of a wake phrase may clip. Mitigate with a ring buffer or accept "Jarvis" as the latency buffer.
-3. **Onboard PDM mic placement** — fixed on the expansion board, points outward from the temple arm. MEMS mics are fairly omnidirectional but test early.
 
 ## Emotion mapping (Jarvis tool)
 
@@ -48,10 +43,6 @@ Read heart rate in short bursts and combine with the sentiment of the latest utt
 
 Implemented later as a `read_mood` tool in the Jarvis `route_tool` pipeline.
 
-## Build order
-
-1. Bench audio path: mic -> Wi-Fi -> PC -> Jarvis STT -> response -> TTS -> bone conduction. Prove latency/quality.
-2. Wire into Jarvis as the mic + speaker (add a "glass link" server on the PC).
 3. On-device wake word (ESP-SR WakeNet) to stop constant streaming.
 4. Camera capture -> JPEG -> PC YOLO (reuse existing vision tools).
 5. Heart-rate sensor + DSP + logging.
