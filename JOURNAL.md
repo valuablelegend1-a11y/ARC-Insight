@@ -23,6 +23,7 @@ So now that I got the schematic for the PCB all set up, it was time to start the
 
 **8/25/26 - I updated the CAD designs with the new parameters.**
 Now with me deciding to go the custom PCB route I had a lot more flexibility in the glasses frames. So I worked through a couple options for the arms, and initially I was just going to have the whole arm be about 16mm thick to fit the PCB. But after looking at it and comparing I decided to go with a curved bottom and slightly slanted top, which would allow the PCB plenty of room and still keep the arms relatively thin. At first the arms ended up being still almost 20mm wide, which was the exact thing I was trying to avoid by creating the custom PCB. So I messed with the PCB a bit to shrink it down a bit, and was able to get the arms down to 19mm at the smallest point, which still was not ideal. Then I took a step away from it for a bit, and when I went back I realized that somehow I had completely misread the PCB specs thinking it was 17mm, when it was actually *13.75mm* that meant I could shrink the arms width down exponentially, getting the largest part of the arm down to about 16mm. This made the whole look a lot cleaner and really made the whole design work better too.
+
 <img width="640" height="221" alt="Screenshot 2026-09-05 111822" src="https://github.com/user-attachments/assets/9f679fa7-1ab6-4d95-920d-3ec2aa486c85" />
 <img width="959" height="348" alt="Screenshot 2026-09-05 112029" src="https://github.com/user-attachments/assets/fcacbb91-9bc7-40df-9cbc-f3ed3fc4b6b6" />
 
