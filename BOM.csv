@@ -1,10 +1,10 @@
 Item,Quantity,Unit Price,Link,Notes
-Custom PCB,1,57.76,no link,"A custom designed PCB with and ESP32-S3 chip for processing"
-OV2640 24-pin DVP camera module (75MM-120),1,8.19,https://www.aliexpress.us/item/3256805763260734.html,"2MP, DVP 24-pin 0.5mm FPC, 120-degree FOV daylight (IR-cut) sensor, 75mm FPC cable. Needs 24-pin 0.5mm FPC breakout to wire to the Plus. Skip 850nm/650nm night-vision variants for daytime use."
-Bone conduction transducer,2,7.77,https://www.aliexpress.us/item/3256805202736798.html?spm=a2g0o.productlist.0.0.2867pv0Vpv0Vmi&mp=1&pdp_npi=6%40dis%21USD%21USD+8.09%21USD+7.77%21%21USD+7.77%21%21%21%40210311c217883775756192298e0ebd%2112000036627561906%21ct%21US%217596701668%21%211%210%21&gatewayAdapt=glo2usa,"8-16 ohm, electromagnetic (NOT piezo). Frame unit: GD-02 style compact drivers."
+Custom PCB,1,57.76,no link,"A custom designed PCB with an ESP32-S3 chip for processing."
+OV2640 24-pin DVP camera module (75MM-120),1,8.19,https://www.aliexpress.us/item/3256805763260734.html,"2MP, DVP 24-pin 0.5mm FPC."
+Bone conduction transducer,2,7.77,https://www.aliexpress.us/item/3256805202736798.html,"8-16 ohm, electromagnetic (NOT piezo). Frame unit: GD-02 style compact drivers."
 MAX98357A I2S class-D amp,2,5.95,https://www.adafruit.com/product/3006,"Mono audio out, drives bone-conduction transducers; gate via SD pin for power."
-"Ultra-slim 1S LiPo (300-400 mAh, with protection PCB)",2,,,"Wire in parallel to Plus BAT+/BAT- pads"
-MAX30102 heart-rate breakout,1,,,"PPG over I2C; 1.8V logic (level shift or power rail)"
-Electret mic,1,2.36,https://www.sameskydevices.com/product/audio/microphones/electret-condenser-microphones/cmc-4013-2-smt-tr,"Always-on wake-on-sound; wakes ESP32 from deep sleep via GPIO. Only peripheral that stays powered in deep sleep."
-INMP441 I2S mic (MH-ET LIVE),5,3.55,https://www.aliexpress.us/item/3256809614473821.html,"Primary speech mic (Plus has no onboard mic); I2S into S3, streams to PC for STT. Buy 5-pack ($3.55 total) for spares. Cannot wake from deep sleep - electret+comparator does that."
-Antenna routing,1,,,"Keep onboard rod antenna region clear of metal in the temple-arm housing"
+2 pack 3.7V 200mAh Lipo Batterys,1,4.97,https://www.aliexpress.us/item/3256812285518045.html,"Total of about 400mAh, should last a full day of use before charge."
+GY-MAX30102 heart-rate breakout,1,2.09,https://www.aliexpress.us/item/3256810169517122.html,"heart rate sensor for emotion mapping."
+Electret mic,1,2.36,https://www.sameskydevices.com/product/audio/microphones/electret-condenser-microphones/cmc-4013-2-smt-tr,"Always-on wake-on-sound, wakes ESP32 from deep sleep via GPIO. Only peripheral that stays powered in deep sleep."
+5 pack INMP441 I2S mic (MH-ET LIVE),5,3.55,https://www.aliexpress.us/item/3256809614473821.html,"Primary speech mic I2S into S3."
+
