@@ -8,3 +8,4 @@ GY-MAX30102 heart-rate breakout,1,2.09,https://www.aliexpress.us/item/3256810169
 Electret mic,1,2.36,https://www.sameskydevices.com/product/audio/microphones/electret-condenser-microphones/cmc-4013-2-smt-tr,"Always-on wake-on-sound, wakes ESP32 from deep sleep via GPIO. Only peripheral that stays powered in deep sleep."
 5 pack INMP441 I2S mic (MH-ET LIVE),5,3.55,https://www.aliexpress.us/item/3256809614473821.html,"Primary speech mic I2S into S3."
 Face Shield For Lenses,1,6.99,https://www.amazon.com/Saillong-Replacement-Compatible-Shields-Grinding/dp/B0D8L11X2C/ref=sr_1_5,"Transparent face shield to be cut to size for glasses lenses."
+Signal Antenna,1,7.02,https://www.amazon.com/Adafruit-2-4GHz-Flexible-Antenna-Connector/dp/B01E43VXO0,"A 50Ω 100mm 4dBi Antenna, plugs into board's U.FL port."
