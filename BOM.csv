@@ -1,5 +1,5 @@
 Item,Quantity,Unit Price,Link,Notes
-Custom PCB,1,57.76,no link,"A custom designed PCB with an ESP32-S3 chip for processing."
+Custom PCB,1,65.52,no link,"A custom designed PCB with an ESP32-S3 chip for processing."
 OV2640 24-pin DVP camera module (75MM-120),1,8.19,https://www.aliexpress.us/item/3256805763260734.html,"2MP, DVP 24-pin 0.5mm FPC."
 Bone conduction transducer,2,6.96,https://www.aliexpress.us/item/3256808698640901.html,"8-16 ohm, electromagnetic GD-02 style compact drivers."
 3.7V 300mAh Lipo Batterys,2,3.99,https://www.aliexpress.us/item/3256804324797087.html,"Total of about 400mAh, should last a full day of use before charge."
