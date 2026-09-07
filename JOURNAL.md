@@ -40,3 +40,6 @@ Then I also added whatever the parts are called on the frames that rest against 
 <img width="320" height="240" alt="IMG_2886" src="https://github.com/user-attachments/assets/2f81ab3c-2064-4307-8c91-12a17efbb3c5" />
 
 *Time Spent: 2 Hours*
+
+
+**9/6/26 - I fixed some PCB errors**
