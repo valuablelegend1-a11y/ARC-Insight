@@ -36,7 +36,7 @@ Then I also added whatever the parts are called on the frames that rest against 
 
 <img width="320" height="240" alt="IMG_2885" src="https://github.com/user-attachments/assets/2ddf466e-ee33-452d-be51-b244217d123a" />
 <img width="320" height="240" alt="IMG_2887" src="https://github.com/user-attachments/assets/0e199419-5151-4132-9542-0450011a9a6d" />
-<img width="240" height="320" alt="IMG_2884" src="https://github.com/user-attachments/assets/7dba7559-939d-4b22-8e22-25105bd7b37f" />
+<img width="320" height="240" alt="IMG_2884" src="https://github.com/user-attachments/assets/fc7d78d3-f273-4cad-bb2d-0e6b5006ccd9" />
 <img width="320" height="240" alt="IMG_2886" src="https://github.com/user-attachments/assets/2f81ab3c-2064-4307-8c91-12a17efbb3c5" />
 
 *Time Spent: 2 Hours*
