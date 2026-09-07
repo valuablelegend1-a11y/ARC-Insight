@@ -28,3 +28,15 @@ Now with me deciding to go the custom PCB route I had a lot more flexibility in 
 <img width="959" height="348" alt="Screenshot 2026-09-05 112029" src="https://github.com/user-attachments/assets/fcacbb91-9bc7-40df-9cbc-f3ed3fc4b6b6" />
 
 *Time Spent: 3 Hours*
+
+
+**8/30/26 - I tested some printing techniques.**
+So I wanted to get a good idea of how to print each piece, so I threw some in the slicer to do a quick print. For the lenses frames I started out by putting them face down on the plate for printing ease. I went through a couple testing models with the arms attached differently to try to get a good idea of how to secure them for maximum stability and clamping force for the sensor and transducers. Most of these test were also done in between the versioning of the arms, as discussed in the previous journal entry, meaning most of these test were done with the thicker arms. After a couple tests, I determined that the best way to have the body of the arms open to insert the components was to make one side with the extruded walls, and the other as a flat piece on the outside for looks. Then I checked out a couple versions with an ironed top, which really gave them a clean look. I also ended up deciding to go with a carbon-fiber PETG for the frames, as this would give a great strength to weight ratio, plus the carbon fiber added really helps remove layer lines for that nice clean 'machined' look. Ultimately I did need to do some slight mods to the lenses frames to make them look better with the arms, and to add the camera hole and remove the curve to get that nice ironed look.
+Then I also added whatever the parts are called on the frames that rest against the sides of your nose, actually let me look up what those are called quick, hold on...Okay I'm back, apparently they are just called 'nose pads' which is wayyy too generic of a name in my opinion, a part like those is exactly the kind of thing that should have some ridiculous name that makes no sense and has no origin. Anyways I designed those as separate pieces to glue on, because if they were attached then I wouldn't be able to print the glasses flat down meaning they couldnt be ironed and look nicer.
+
+<img width="320" height="240" alt="IMG_2885" src="https://github.com/user-attachments/assets/2ddf466e-ee33-452d-be51-b244217d123a" />
+<img width="320" height="240" alt="IMG_2887" src="https://github.com/user-attachments/assets/0e199419-5151-4132-9542-0450011a9a6d" />
+<img width="240" height="320" alt="IMG_2884" src="https://github.com/user-attachments/assets/7dba7559-939d-4b22-8e22-25105bd7b37f" />
+<img width="320" height="240" alt="IMG_2886" src="https://github.com/user-attachments/assets/2f81ab3c-2064-4307-8c91-12a17efbb3c5" />
+
+*Time Spent: 2 Hours*
