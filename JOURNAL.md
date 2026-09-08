@@ -58,6 +58,6 @@ Today was the day to finally fix the VCC net that I discussed in the previous jo
 
 <img width="1137" height="705" alt="Screenshot 2026-09-08 150518" src="https://github.com/user-attachments/assets/5e1b10bc-f899-40db-a4e9-753de1ab937f" />
 <img width="2292" height="1573" alt="Screenshot 2026-09-08 150456" src="https://github.com/user-attachments/assets/237abdfc-9cad-4543-a300-c1bbcae32e76" />
-<img width="364" height="1713" alt="Screenshot 2026-09-08 150427" src="https://github.com/user-attachments/assets/61552b1b-f523-4312-b262-230ae84fc9d5" />
+<img width="1713" height="364" alt="Screenshot 2026-09-08 150427" src="https://github.com/user-attachments/assets/2f1c5e64-39e4-46ba-bf70-16b5472fd117" />
 
 *Time Spent: 6 Hours*
