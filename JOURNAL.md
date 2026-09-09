@@ -1,8 +1,8 @@
 **8/7/26 - I made some basic drawings.**
 As usual for my projects I started off with some simple drawings of my idea, really the point of them is just to get a physical picture in my head before starting the true design process. Really the point of this whole build is to have a wearable device that I can use to communicate with my homebuilt, custom made transformer based AI: J.A.R.V.I.S. He also has tools and things to answer questions like weather, time, distances, facial recognition(through the camera), and more. For all of this, I decided to go with the Seeed Studio XIAO ESP32-S3 board, which is pretty small  and should work well. Then a couple other components that I know will be necessary, and I did a few renditions of the basic design to try to get a good style to fit what I was looking for, which I'm sure I will change more when I do the actual CAD of the project. For the most part these designs were simple, because the big benefit of small-scale projects is that there is literally just less area to manage. I also debated whether to go with some basic bluelight glasses lenses, or another simple option. Ultimately I decided that it would be slightly complex to try to model glasses frames around existing lenses, and really the point of these glasses is to be able to talk to J.A.R.V.I.S. when I'm AWAY from my computer, meaning bluelight would realistically not be needed.
 
-<img width="160" height="320" alt="IMG_2889" src="https://github.com/user-attachments/assets/b7987669-7954-46c8-b4c1-2f7c89b22ae2" />
-<img width="240" height="320" alt="IMG_2890" src="https://github.com/user-attachments/assets/678367b9-86d0-4752-8464-a7d73e4a9572" />
+<img width="320" height="160" alt="IMG_2889" src="https://github.com/user-attachments/assets/3777aae7-c72f-4b3d-8e0b-1810fda08646" />
+<img width="320" height="240" alt="IMG_2890" src="https://github.com/user-attachments/assets/2825316c-312b-47f0-bd51-7fe6cb01e127" />
 
 *Time Spent: 1 Hour*
 
