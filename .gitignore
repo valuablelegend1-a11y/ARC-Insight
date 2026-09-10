@@ -5,6 +5,7 @@ build/
 *.hex
 *.ino.cpp
 *.ino.h
+.pio/
 
 # Python (PC-side link)
 __pycache__/
@@ -15,6 +16,11 @@ venv/
 # CAD
 *.bak
 *.swp
+
+# KiCad history + backup snapshots + nested library repos (not project content)
+PCB/**/.history/
+PCB/**/_restore_backup_*/
+ref/kicad-libraries/
 
 # OS junk
 .DS_Store

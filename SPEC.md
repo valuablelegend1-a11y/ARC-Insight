@@ -1,4 +1,4 @@
-# ARC-Vision Spec Sheet (v0.1)
+# ARC-Insight Spec Sheet (v0.1)
 
 ## Architecture
 

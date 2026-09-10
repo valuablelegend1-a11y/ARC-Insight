@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Espressif") (type "KiCad") (uri "${KIPRJMOD}/../../ref/kicad-libraries/symbols/Espressif.kicad_sym") (options "") (descr "Espressif ESP32 chips"))
+  (lib (name "ARCInsight") (type "KiCad") (uri "${KIPRJMOD}/ARCInsight.kicad_sym") (options "") (descr "ARC-Insight custom parts"))
+)
