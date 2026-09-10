@@ -1,7 +1,9 @@
+---
 Title: "ARC-Insight"
 Author: "Jadon Persun"
 Description: "AI glasses with a custom PCB"
 Created At: 2026-08-07
+---
 
 # August 7: I made some basic drawings.
 As usual for my projects I started off with some simple drawings of my idea, really the point of them is just to get a physical picture in my head before starting the true design process. Really the point of this whole build is to have a wearable device that I can use to communicate with my homebuilt, custom made transformer based AI: J.A.R.V.I.S. He also has tools and things to answer questions like weather, time, distances, facial recognition(through the camera), and more. For all of this, I decided to go with the Seeed Studio XIAO ESP32-S3 board, which is pretty small  and should work well. Then a couple other components that I know will be necessary, and I did a few renditions of the basic design to try to get a good style to fit what I was looking for, which I'm sure I will change more when I do the actual CAD of the project. For the most part these designs were simple, because the big benefit of small-scale projects is that there is literally just less area to manage. I also debated whether to go with some basic bluelight glasses lenses, or another simple option. Ultimately I decided that it would be slightly complex to try to model glasses frames around existing lenses, and really the point of these glasses is to be able to talk to J.A.R.V.I.S. when I'm AWAY from my computer, meaning bluelight would realistically not be needed.
