@@ -89,3 +89,10 @@ Now that all the errors seemed to be fixed, I did ANOTHER thrice-over(surely tha
 <img width="1428" height="568" alt="Screenshot 2026-09-09 151004" src="https://github.com/user-attachments/assets/98d5a1a3-fb0e-4f0e-a94d-b5b3e2f76b3f" />
 
 **Time Spent: 1 Hour**
+
+
+# September 10: I added a 'button' of sorts.
+Another thing that I wanted to add to the glasses was some sort of button to turn them on and off. So I decided to go the route of capacitive touch for it to make it super simple and clean. It really wasn't complicated, I just added the correct footprint and everything to the PCB, ran the trace, and then I will just solder the wire directly into it. Then I just reexported the gerbers and CPL and BOM files again, where I realized there was an issue with the origin of the files, causing the parts to be misaligned from where they were supposed to be. So I went through the process of just fixing those issues to ensure it would all be lied out correctly. After that I just updated them in the repo as well, and called it a day.
+
+<img width="1100" height="913" alt="Screenshot 2026-09-14 144311" src="https://github.com/user-attachments/assets/6e7f69f8-1c75-4f74-b77a-810a2a88bfa8" />
+<img width="339" height="780" alt="Screenshot 2026-09-14 144344" src="https://github.com/user-attachments/assets/cd41a41e-1684-4708-a8f9-4e6743b088fb" />
