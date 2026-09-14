@@ -17,7 +17,8 @@ venv/
 *.bak
 *.swp
 
-# KiCad history + backup snapshots + nested library repos (not project content)
+# KiCad history + lock files + backup snapshots + nested library repos (not project content)
+*.lck
 PCB/**/.history/
 PCB/**/_restore_backup_*/
 ref/kicad-libraries/

@@ -8,7 +8,11 @@ The goal is a personal assistant that lives on my face — face recognition, que
 
 ## How to use it:
 
-*(WIP — firmware not written yet. Design phase.)*
+Now that both halves are actually built (the firmware on the glasses and the server side that sits right next to Jarvis) it's really not that hard to get running, you build the firmware in PlatformIO, flash it to the glasses over USB just the one time, and on the PC you drop the arc_insight package into the J.A.R.V.I.S. folder, and since main.py already calls into it (I wrote in the bridge hook myself, it was like three lines, and after that nothing else in Jarvis ever needed to change, which was the whole point of the design) you just run `python main.py` exactly like you always have. The second the glasses are on and on the same Wi-Fi the server sees them, Jarvis prints `ARCINSIGHT: glasses connected`, and from then on anything you say into the glasses (even a whisper, the mics are honestly really good) gets heard and understood and answered, and his reply comes right back into your ears through the bone conduction drivers, which feels weird for the first day, but you get used to it (I did, anyway).
+
+You can hop between the glasses and your desk anytime you want, either by asking, "jarvis, switch to glasses" or "jarvis, switch to laptop", or by just hitting Ctrl+Alt+G, and Jarvis moves his ears, his mouth, and his eyes to wherever you are, same him, same memory, same everything, he just relocates. While you're wearing them you've basically got his eyes on your face, he can tell you "what do you see", "who is this", "take a picture", and my personal favorite, "how am I feeling", which is where the heartbeat sensor earns its place, because Jarvis takes how fast your heart is beating, combines it with the tone of the words you say, and decides if you're stressed or excited or just having a chill day (and honestly he's been right more often than not).
+
+When there's new firmware to put on the glasses you don't need to crack them open again, you just build the new image in PlatformIO, and run `python arc_insight\ota.py --bin ..\arc-insight\Code\.pio\build\arcinsight\firmware.bin`, which sends it over Wi-Fi on the same websocket connection, the glasses double check the image, and then reboot into the new version, and if it doesn't pass the check they just stay on the old one and you'll see it in the logs (hasn't really happened to me, but it's a nice safety net).
 
 ## Why I am building this:
 
