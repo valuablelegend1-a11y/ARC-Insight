@@ -17,6 +17,8 @@ namespace arcv {
 
 #define ARCI_PIN_WAKE     18
 
+#define ARCI_PIN_TOUCH     1
+
 #define ARCI_PIN_CAM_XCLK 13
 #define ARCI_PIN_CAM_PCLK  8
 #define ARCI_PIN_CAM_VSYNC 6

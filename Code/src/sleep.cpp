@@ -14,6 +14,8 @@ WakeReason wakeReason() {
       return WakeReason::Comparator;
     case ESP_SLEEP_WAKEUP_TIMER:
       return WakeReason::Timer;
+    case ESP_SLEEP_WAKEUP_TOUCHPAD:
+      return WakeReason::Touch;
     case ESP_SLEEP_WAKEUP_UNDEFINED:
       return WakeReason::PowerOn;
     default:

@@ -8,6 +8,7 @@ enum class WakeReason : uint8_t {
   Comparator,
   Timer,
   PowerOn,
+  Touch,
 };
 
 WakeReason wakeReason();

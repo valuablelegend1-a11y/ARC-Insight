@@ -5725,6 +5725,7 @@
 		(at 116.84 104.14)
 		(uuid "50cc8164-ac5d-4e56-a5c8-77a7b88e7585")
 	)
+
 	(no_connect
 		(at 162.56 86.36)
 		(uuid "54cb847c-7939-4de8-9cd8-5ee2c273b855")
@@ -5732,10 +5733,6 @@
 	(no_connect
 		(at 97.79 72.39)
 		(uuid "6a667ef6-7cd4-4f8b-9474-806aa2bd5fc1")
-	)
-	(no_connect
-		(at 116.84 68.58)
-		(uuid "6e3601f2-bfcc-44b2-a093-c869cc3cfda9")
 	)
 	(no_connect
 		(at 116.84 66.04)
@@ -6989,6 +6986,16 @@
 	)
 	(wire
 		(pts
+			(xy 104.14 68.58) (xy 116.84 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a1b2c3d4-0001-4001-8001-000000000001")
+	)
+	(wire
+		(pts
 			(xy 104.14 86.36) (xy 116.84 86.36)
 		)
 		(stroke
@@ -6997,6 +7004,7 @@
 		)
 		(uuid "68ed5532-cdc7-4c86-b07d-451bf926a2d4")
 	)
+	
 	(wire
 		(pts
 			(xy 219.71 40.64) (xy 219.71 48.26)
@@ -8846,6 +8854,16 @@
 			(justify left bottom)
 		)
 		(uuid "8ba8bd22-385c-4a3c-947e-36a29988dfb7")
+	)
+	(label "TOUCH"
+		(at 104.14 68.58 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a1b2c3d4-0002-4002-8002-000000000002")
 	)
 	(label "VBAT"
 		(at 252.73 133.35 0)

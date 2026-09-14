@@ -16,6 +16,7 @@
 #include "selftest.h"
 #include "settings.h"
 #include "sleep.h"
+#include "touch.h"
 
 using namespace arcv;
 
@@ -25,6 +26,7 @@ Link gLink;
 AudioIO gAudio;
 Heart gHeart;
 Camera gCamera;
+Touch gTouch;
 
 bool gStreaming = false;
 bool gWasConnected = false;
@@ -33,16 +35,34 @@ uint32_t gLastCmdMs = 0;
 uint32_t gOtaRecv = 0;
 uint32_t gOtaSize = 0;
 bool gOtaActive = false;
+bool gOtaEndRequested = false;
 esp_ota_handle_t gOtaHandle = 0;
 const esp_partition_t* gOtaPartition = nullptr;
 
+void finalizeOta() {
+  esp_err_t err = esp_ota_end(gOtaHandle);
+  gOtaActive = false;
+  if (err != ESP_OK) {
+    gLink.sendText("{\"type\":\"ota_event\",\"event\":\"device_error\","
+                   "\"detail\":\"verify failed (%d)\"}",
+                   (int)err);
+    return;
+  }
+  gLink.sendText("{\"type\":\"ota_event\",\"event\":\"ota_done\"}");
+  esp_ota_set_boot_partition(gOtaPartition);
+  esp_restart();
+}
+
 void parseWifiSet(const char* text);
 void handleOtaBegin(const char* text);
+void handleOtaEnd(const char* text);
+void handleOtaAbort();
 
 void goToSleep() {
   gCamera.deinit();
   gHeart.shutdown();
   gLink.disconnect();
+  gTouch.enableWake();
   enterDeepSleep(ARCI_SLEEP_GUARD_HOURS * 3600);
 }
 
@@ -73,9 +93,7 @@ void onBinary(uint8_t op, const uint8_t* data, size_t len) {
           gOtaRecv += (uint32_t)len;
         }
         if (gOtaRecv >= gOtaSize) {
-          esp_ota_end(gOtaHandle);
-          esp_ota_set_boot_partition(gOtaPartition);
-          esp_restart();
+          finalizeOta();
         }
       }
       break;
@@ -101,6 +119,10 @@ void onText(const char* text, size_t len) {
     goToSleep();
   } else if (strstr(text, "ota_begin")) {
     handleOtaBegin(text);
+  } else if (strstr(text, "ota_end")) {
+    handleOtaEnd(text);
+  } else if (strstr(text, "ota_abort")) {
+    handleOtaAbort();
   } else if (strstr(text, "wifi_set")) {
     parseWifiSet(text);
   } else if (strstr(text, "get_status")) {
@@ -152,6 +174,28 @@ void handleOtaBegin(const char* text) {
   gOtaSize = size;
   gOtaRecv = 0;
   gOtaActive = true;
+  gOtaEndRequested = false;
+}
+
+void handleOtaEnd(const char* text) {
+  (void)text;
+  if (!gOtaActive || !gOtaPartition) return;
+  gOtaEndRequested = true;
+  if (gOtaRecv < gOtaSize) {
+    gLink.sendText("{\"type\":\"ota_event\",\"event\":\"device_error\","
+                   "\"detail\":\"short transfer (%u of %u bytes)\"}",
+                   (unsigned)gOtaRecv, (unsigned)gOtaSize);
+    esp_ota_abort(gOtaHandle);
+    gOtaActive = false;
+    return;
+  }
+  finalizeOta();
+}
+
+void handleOtaAbort() {
+  if (!gOtaActive || !gOtaPartition) return;
+  esp_ota_abort(gOtaHandle);
+  gOtaActive = false;
 }
 
 }  // namespace
@@ -178,6 +222,11 @@ void setup() {
   gAudio.begin();
 
   WakeReason reason = wakeReason();
+  if (reason == WakeReason::Touch) {
+    gTouch.suppressRearm();
+  } else {
+    gTouch.begin();
+  }
   bool linked = gLink.connect(settings().wifiSsid().c_str(),
                               settings().wifiPass().c_str(),
                               settings().pcHost().c_str(),
@@ -201,6 +250,11 @@ void loop() {
 #endif
 
   gLink.loop();
+  gTouch.poll(millis());
+
+  if (gTouch.grab()) {
+    goToSleep();
+  }
 
   bool connectedNow = gLink.connected();
   if (connectedNow && !gWasConnected) {

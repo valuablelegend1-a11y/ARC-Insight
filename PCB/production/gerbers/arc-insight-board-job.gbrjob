@@ -5,12 +5,12 @@
       "Application": "Pcbnew",
       "Version": "10.0.5"
     },
-    "CreationDate": "2026-09-07T16:14:22-05:00"
+    "CreationDate": "2026-09-13T11:56:28-05:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
       "Name": "arc-insight-board",
-      "GUID": "6172632d-7669-4736-996f-6e2d626f6172",
+      "GUID": "6172632d-696e-4736-9967-68742d626f61",
       "Revision": "rev?"
     },
     "Size": {

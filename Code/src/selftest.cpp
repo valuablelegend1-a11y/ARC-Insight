@@ -155,6 +155,17 @@ bool probeWifi() {
   return ok;
 }
 
+bool probeTouch() {
+  uint32_t sum = 0;
+  for (int i = 0; i < 16; ++i) {
+    sum += touchRead(ARCI_PIN_TOUCH);
+    delay(5);
+  }
+  uint32_t avg = sum / 16;
+  Serial.printf("[selftest] touch raw avg=%u\n", (unsigned)avg);
+  return avg > 0;
+}
+
 }  // namespace
 
 void runSelftest() {
@@ -173,6 +184,7 @@ void runSelftest() {
   stage(probeHr(), "max30102");
   stage(probeCamera(), "camera");
   stage(probeWifi(), "wifi");
+  stage(probeTouch(), "touch");
   Serial.printf("[selftest] result: %d pass, %d fail\n", pass, fail);
 }
 
