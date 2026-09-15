@@ -15,53 +15,50 @@ void Touch::calibrate() {
     sum += touchRead(ARCI_PIN_TOUCH);
     delay(2);
   }
-  mBaseline = sum / 32;
+  mBaseline_ = sum / 32;
+  mPressed_ = false;
+  mHoldDelivered_ = false;
 }
 
-bool Touch::poll(uint32_t nowMs) {
-  uint32_t val = touchRead(ARCI_PIN_TOUCH);
+Touch::Gesture Touch::poll(uint32_t nowMs) {
+  bool touched = touchRead(ARCI_PIN_TOUCH) > mBaseline_ + ARCI_TOUCH_THRESHOLD;
 
-  if (mSuppressed) {
-    if (val >= mWakeHoldRaw / 2) {
-      return true;
+  if (touched && !mPressed_) {
+    if (mTapCount_ == 1 && nowMs - mLastTapReleaseMs_ > ARCI_DOUBLE_TAP_MS) {
+      mTapCount_ = 0;
     }
-    mSuppressed = false;
-    calibrate();
+    mPressed_ = true;
+    mPressStartMs_ = nowMs;
+    mHoldDelivered_ = false;
   }
 
-  bool touched = (val > mBaseline + ARCI_TOUCH_THRESHOLD);
-
-  if (!touched) {
-    mGrab = false;
-    mPressStartMs = nowMs;
-    mTouched = false;
-    return false;
+  if (!touched && mPressed_) {
+    mPressed_ = false;
+    if (nowMs - mPressStartMs_ < ARCI_TAP_MAX_MS && !mHoldDelivered_) {
+      mTapCount_++;
+      mLastTapReleaseMs_ = nowMs;
+    } else {
+      mTapCount_ = 0;
+    }
   }
 
-  if (!mTouched) {
-    mPressStartMs = nowMs;
-  }
-  mTouched = true;
-
-  if (!mGrab && (nowMs - mPressStartMs >= ARCI_TOUCH_HOLD_MS)) {
-    mGrab = true;
+  if (mTapCount_ == 2) {
+    mTapCount_ = 0;
+    return Gesture::DoubleTap;
   }
 
-  return true;
+  if (touched && !mHoldDelivered_ && nowMs - mPressStartMs_ >= ARCI_TOUCH_HOLD_MS) {
+    mHoldDelivered_ = true;
+    mTapCount_ = 0;
+    return Gesture::Hold;
+  }
+
+  if (mTapCount_ == 1 && nowMs - mLastTapReleaseMs_ > ARCI_DOUBLE_TAP_MS) {
+    mTapCount_ = 0;
+    return Gesture::Tap;
+  }
+
+  return Gesture::None;
 }
-
-bool Touch::grab() const { return mGrab; }
-
-void Touch::enableWake() const {
-  touchSleepWakeUpEnable(ARCI_PIN_TOUCH, mBaseline + ARCI_TOUCH_THRESHOLD * 2);
-}
-
-void Touch::suppressRearm() {
-  mSuppressed = true;
-  mGrab = false;
-  mWakeHoldRaw = touchRead(ARCI_PIN_TOUCH);
-}
-
-uint32_t Touch::raw() const { return touchRead(ARCI_PIN_TOUCH); }
 
 }  // namespace arcv

@@ -6,7 +6,9 @@ import websockets
 from websockets.exceptions import ConnectionClosed
 
 from arc_insight import protocol
+from arc_insight.config import data_path
 from arc_insight.stt import StreamSTT
+from arc_insight import vision
 
 
 class GlassesServer:
@@ -80,6 +82,10 @@ class GlassesServer:
             elif opcode == protocol.BIN_IMAGE_JPEG:
                 self.io.store_frame(payload)
                 self._resolve_image_waiters(payload)
+            elif opcode == protocol.BIN_SNAPSHOT:
+                directory = data_path(self.cfg, "screenshot_dir")
+                path = vision.save_jpeg(payload, directory)
+                print(f"ARCINSIGHT: snapshot saved to {path}", flush=True)
             return
 
         try:

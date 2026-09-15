@@ -8,6 +8,7 @@ enum class BinaryOp : uint8_t {
   ImageJpeg = 0x02,
   AudioMp3  = 0x03,
   FwChunk   = 0x04,
+  Snapshot  = 0x05,  // button double-tap picture, saved by PC without AI
 };
 
 }  // namespace arcv

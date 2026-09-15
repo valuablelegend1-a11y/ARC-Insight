@@ -10,6 +10,7 @@
 #include "audio_io.h"
 #include "camera.h"
 #include "heart.h"
+#include "kws.h"
 #include "link.h"
 #include "pins.h"
 #include "protocol.h"
@@ -27,15 +28,17 @@ AudioIO gAudio;
 Heart gHeart;
 Camera gCamera;
 Touch gTouch;
+Kws gKws;
 
+enum class DevState { Listen, Active };
+DevState gState = DevState::Listen;
 bool gStreaming = false;
-bool gWasConnected = false;
-uint32_t gBootMs = 0;
+bool gSnapshotPending = false;
 uint32_t gLastCmdMs = 0;
+uint32_t gStateSinceMs = 0;
 uint32_t gOtaRecv = 0;
 uint32_t gOtaSize = 0;
 bool gOtaActive = false;
-bool gOtaEndRequested = false;
 esp_ota_handle_t gOtaHandle = 0;
 const esp_partition_t* gOtaPartition = nullptr;
 
@@ -53,31 +56,96 @@ void finalizeOta() {
   esp_restart();
 }
 
-void parseWifiSet(const char* text);
-void handleOtaBegin(const char* text);
-void handleOtaEnd(const char* text);
-void handleOtaAbort();
+bool linkConnection() {
+  return gLink.connect(settings().wifiSsid().c_str(),
+                       settings().wifiPass().c_str(),
+                       settings().pcHost().c_str(),
+                       settings().pcPort());
+}
 
-void goToSleep() {
+void enterListen() {
+  gLink.disconnect();
+  WiFi.disconnect(true);
+  WiFi.mode(WIFI_OFF);
+  gHeart.shutdown();
+  gCamera.deinit();
+  gAudio.setStreaming(true);  // mic -> on-device wake-word listener
+  gState = DevState::Listen;
+  gStateSinceMs = millis();
+  Serial.println("[mode] listen (wi-fi off, wake word armed)");
+}
+
+void enterActive() {
+  if (!linkConnection()) {
+    enterListen();
+    return;
+  }
+  gHeart.wake();
+  gAudio.setStreaming(true);  // mic -> streamed up to Jarvis
+  gState = DevState::Active;
+  gStateSinceMs = millis();
+  gLastCmdMs = millis();
+  gLink.sendText("{\"type\":\"hello\",\"name\":\"arc-insight\",\"fw\":\"0.1\","
+                 "\"wake\":%d}",
+                 (int)wakeReason());
+  gAudio.beep();
+  Serial.println("[mode] active (streaming to jarvis)");
+}
+
+void enterDeepSleepNow() {
+  gAudio.setStreaming(false);
+  gAudio.beep();
+  delay(120);
   gCamera.deinit();
   gHeart.shutdown();
   gLink.disconnect();
+  WiFi.disconnect(true);
+  WiFi.mode(WIFI_OFF);
+  Serial.println("[mode] deep sleep (voice wake only)");
   enterDeepSleep(ARCI_SLEEP_GUARD_HOURS * 3600);
 }
 
+void doSnapshot() {
+  bool wasActive = (gState == DevState::Active);
+  if (!wasActive && !linkConnection()) {
+    enterListen();
+    return;
+  }
+  gSnapshotPending = true;
+  gCamera.captureJpeg();
+  gSnapshotPending = false;
+  if (!wasActive) {
+    uint32_t t0 = millis();
+    while (millis() - t0 < 250) {
+      gLink.loop();
+      delay(2);
+    }
+    enterListen();
+  }
+}
+
 void onPcm(const int16_t* pcm, size_t samples) {
-  gLink.sendBinary((uint8_t)BinaryOp::AudioPcm, (const uint8_t*)pcm,
-                   samples * 2);
+  if (gState == DevState::Active) {
+    gLink.sendBinary((uint8_t)BinaryOp::AudioPcm, (const uint8_t*)pcm,
+                     samples * 2);
+  } else {
+    gKws.feed(pcm, samples);
+  }
 }
 
 void onHr(int bpm, float confidence) {
+  if (gState != DevState::Active) return;
   gLink.sendText("{\"type\":\"hr\",\"sample\":{\"bpm\":%d,"
                  "\"confidence\":%.2f,\"timestamp\":%lu}}",
                  bpm, confidence, (unsigned long)(millis() / 1000));
 }
 
 void onJpeg(const uint8_t* jpeg, size_t len) {
-  gLink.sendBinary((uint8_t)BinaryOp::ImageJpeg, jpeg, len);
+  if (gSnapshotPending) {
+    gLink.sendBinary((uint8_t)BinaryOp::Snapshot, jpeg, len);
+  } else {
+    gLink.sendBinary((uint8_t)BinaryOp::ImageJpeg, jpeg, len);
+  }
 }
 
 void onBinary(uint8_t op, const uint8_t* data, size_t len) {
@@ -101,6 +169,11 @@ void onBinary(uint8_t op, const uint8_t* data, size_t len) {
   }
 }
 
+void parseWifiSet(const char* text);
+void handleOtaBegin(const char* text);
+void handleOtaEnd(const char* text);
+void handleOtaAbort();
+
 void onText(const char* text, size_t len) {
   (void)len;
   gLastCmdMs = millis();
@@ -115,7 +188,7 @@ void onText(const char* text, size_t len) {
     gStreaming = false;
     gAudio.setStreaming(false);
   } else if (strstr(text, "go_sleep")) {
-    goToSleep();
+    enterDeepSleepNow();
   } else if (strstr(text, "ota_begin")) {
     handleOtaBegin(text);
   } else if (strstr(text, "ota_end")) {
@@ -126,8 +199,9 @@ void onText(const char* text, size_t len) {
     parseWifiSet(text);
   } else if (strstr(text, "get_status")) {
     gLink.sendText("{\"type\":\"status\",\"heap\":%lu,"
-                   "\"rssi\":%d,\"streaming\":%d}",
-                   (unsigned long)ESP.getFreeHeap(), WiFi.RSSI(), gStreaming);
+                   "\"rssi\":%d,\"streaming\":%d,\"mode\":%d}",
+                   (unsigned long)ESP.getFreeHeap(), WiFi.RSSI(), gStreaming,
+                   (int)gState);
   }
 }
 
@@ -138,15 +212,9 @@ void parseWifiSet(const char* text) {
   char s[64] = {0};
   char p[64] = {0};
   char h[96] = {0};
-  if (ssid) {
-    sscanf(ssid, "ssid:%63[^|]", s);
-  }
-  if (pass) {
-    sscanf(pass, "pass:%63[^|]", p);
-  }
-  if (host) {
-    sscanf(host, "host:%95[^|]", h);
-  }
+  if (ssid) sscanf(ssid, "ssid:%63[^|]", s);
+  if (pass) sscanf(pass, "pass:%63[^|]", p);
+  if (host) sscanf(host, "host:%95[^|]", h);
   if (s[0] && p[0]) settings().setWifi(s, p);
   if (h[0]) settings().setPcHost(h);
 }
@@ -173,13 +241,11 @@ void handleOtaBegin(const char* text) {
   gOtaSize = size;
   gOtaRecv = 0;
   gOtaActive = true;
-  gOtaEndRequested = false;
 }
 
 void handleOtaEnd(const char* text) {
   (void)text;
   if (!gOtaActive || !gOtaPartition) return;
-  gOtaEndRequested = true;
   if (gOtaRecv < gOtaSize) {
     gLink.sendText("{\"type\":\"ota_event\",\"event\":\"device_error\","
                    "\"detail\":\"short transfer (%u of %u bytes)\"}",
@@ -197,12 +263,54 @@ void handleOtaAbort() {
   gOtaActive = false;
 }
 
+void handleGesture(Touch::Gesture g) {
+  switch (g) {
+    case Touch::Gesture::Tap:
+      if (gState == DevState::Active) {
+        Serial.println("[gesture] single tap -> listen");
+        enterListen();
+      }
+      break;
+    case Touch::Gesture::DoubleTap:
+      Serial.println("[gesture] double tap -> snapshot");
+      doSnapshot();
+      break;
+    case Touch::Gesture::Hold:
+      Serial.println("[gesture] hold 5s -> deep sleep");
+      enterDeepSleepNow();
+      break;
+    default:
+      break;
+  }
+}
+
+void handleSerial() {
+  if (!Serial.available()) return;
+  static String line;
+  while (Serial.available()) {
+    int c = Serial.read();
+    if (c < 0) break;
+    if (c == '\n') {
+      line.trim();
+      if (line == "cal_wake") {
+        gKws.startCalibration();
+      } else if (line == "state") {
+        gKws.printState();
+        Serial.printf("mode: %d (0=listen 1=active)\n", (int)gState);
+      }
+      line = "";
+    } else {
+      line += (char)c;
+    }
+  }
+}
+
 }  // namespace
 
 void setup() {
   Serial.begin(115200);
   delay(120);
-  Serial.println("ARC-INSIGHT v0.1");
+  Serial.println("ARC-INSIGHT v0.2");
 
 #ifdef ARCI_SELFTEST
   runSelftest();
@@ -219,27 +327,14 @@ void setup() {
 
   gHeart.begin();
   gAudio.begin();
+  gTouch.begin();
+  gKws.begin();
 
-  WakeReason reason = wakeReason();
-  if (reason == WakeReason::Touch) {
-    gTouch.suppressRearm();
-  } else {
-    gTouch.begin();
+  if (ARCI_KWS_ENABLE && !gKws.hasTemplate()) {
+    Serial.println("[kws] no wake template yet: send \"cal_wake\" on serial");
   }
-  bool linked = gLink.connect(settings().wifiSsid().c_str(),
-                              settings().wifiPass().c_str(),
-                              settings().pcHost().c_str(),
-                              settings().pcPort());
-  if (linked) {
-    gStreaming = true;
-    gAudio.setStreaming(true);
-    gHeart.wake();
-    if (reason == WakeReason::Comparator || reason == WakeReason::PowerOn) {
-      gAudio.beep();
-    }
-  }
-  gBootMs = millis();
-  gLastCmdMs = millis();
+
+  enterListen();
 }
 
 void loop() {
@@ -248,28 +343,33 @@ void loop() {
   return;
 #endif
 
+  handleSerial();
+
+  Touch::Gesture g = gTouch.poll(millis());
+  if (g != Touch::Gesture::None) handleGesture(g);
+
   gLink.loop();
-  gTouch.poll(millis());
+  gAudio.poll();  // PCM goes to kws (listen) or the link (active)
 
-  if (gTouch.grab()) {
-    goToSleep();
-  }
-
-  bool connectedNow = gLink.connected();
-  if (connectedNow && !gWasConnected) {
-    gLink.sendText("{\"type\":\"hello\",\"name\":\"arc-insight\","
-                   "\"fw\":\"0.1\",\"wake\":%d}",
-                   (int)wakeReason());
-  }
-  gWasConnected = connectedNow;
-
-  if (connectedNow) {
-    gAudio.poll();
-    gHeart.poll(millis());
-    if (millis() - gLastCmdMs > ARCI_IDLE_TIMEOUT_MS) {
-      goToSleep();
+  if (gState == DevState::Active) {
+    if (gLink.connected()) {
+      gHeart.poll(millis());
+      if (millis() - gLastCmdMs > ARCI_IDLE_TIMEOUT_MS) {
+        Serial.println("[idle] returning to listen");
+        enterListen();
+      }
+    } else if (millis() - gStateSinceMs > ARCI_WS_TIMEOUT_MS) {
+      enterListen();
     }
-  } else if (millis() - gBootMs > ARCI_WS_TIMEOUT_MS) {
-    goToSleep();
+  } else {
+    if (ARCI_KWS_ENABLE && gKws.detected()) {
+      gKws.consumeDetected();
+      enterActive();
+    }
+    if (millis() - gStateSinceMs >
+        (uint32_t)ARCI_LISTEN_GUARD_HOURS * 3600000UL) {
+      Serial.println("[guard] long idle, deep sleep");
+      enterDeepSleepNow();
+    }
   }
 }
