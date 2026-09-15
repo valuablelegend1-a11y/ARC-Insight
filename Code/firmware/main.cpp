@@ -62,7 +62,6 @@ void goToSleep() {
   gCamera.deinit();
   gHeart.shutdown();
   gLink.disconnect();
-  gTouch.enableWake();
   enterDeepSleep(ARCI_SLEEP_GUARD_HOURS * 3600);
 }
 
