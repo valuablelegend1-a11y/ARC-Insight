@@ -145,7 +145,34 @@ The first files I made for the firmware were the boring ones that everything els
 # September 13: I kept working on the firmware
 The audio side came next, and honestly it was the scariest part for me. The mic and the audio amp share one I2S bus with a 32 bit wire format, and that wire rate is too fast for speech software to like. So the audio_io files are where all of that lives. That is the mic input, the amp output and the frame timing all together. Then I built the resampler that moves everything down to 16k and chops it into clean 20 millisecond frames. Those frames are what get sent to the computer for speech. Getting the resampler right took some fiddling, because I had to match the timing exactly or the audio would drift. The playback direction was its own problem. Jarvis replies with MP3, and the ESP32 does not decode that on its own. I fumbled around with a couple of decoders and settled on libhelix. I wrapped it in my own mp3_decode file so it takes MP3 bytes in and gives good PCM out to the amp. That wrapper was the last piece of the puzzle. Audio in and audio out were both setup, and that got me pretty excited for testing, because I am starting to see how it will all come together and work for a seamless experience.
 
-<img width="2142" height="1197" alt="Screenshot 2026-09-15 160511" src="https://github.com/user-attachments/assets/11f6a6b3-4793-484b-8897-fd5ceea54259" />
-<img width="1744" height="1085" alt="Screenshot 2026-09-15 160545" src="https://github.com/user-attachments/assets/46188139-1cd1-4348-b41c-619f398f42b5" />
+<img width="2294" height="1389" alt="Screenshot 2026-09-15 165637" src="https://github.com/user-attachments/assets/f80bb85a-3b30-4f42-85e0-22b1d59a3ca3" />
+<img width="2224" height="1382" alt="Screenshot 2026-09-15 165617" src="https://github.com/user-attachments/assets/dafee74e-940b-4944-ba80-60100aaaa0b4" />
 
 **Time Spent: 2.5 Hours**
+
+
+# September 14: I made the firmware link to the PC.
+With the audio working, I needed the glasses to actually reach the computer. The link files start the wireless connection and then a websocket client that talks to the server on my PC. I used the WebSockets library for the ESP32 instead of writing my own socket code, and that saved me a lot of pain. It sends the mic frames and the pictures, and it listens for incoming commands and audio. The framing was easy, since I already had the protocol header done. The trickier part was that connecting can block the whole board for a second or two, so I had to make sure that never happened in the middle of audio streaming. The camera files were simpler than I feared. The ESP32 has built in camera support, so capture is basically one ask for a JPEG. I made it lazy, so it only powers up when something actually wants a photo. That keeps the power draw down. The main gotcha there was the driver version, and I just had to make sure the wiring matched what the driver expects. The heart files were the hardest of this bunch. The sensor reads an optical pulse against my skin and returns a bpm with a confidence value. It took me a while to figure out the settings, and I ended up ignoring the weak readings and only sending the good ones up. The nice part is that the heart rate gets posted as an event, so the computer gets a little beat update instead of a full stream. Between the link, the camera and the heart sensor, the glasses were finally a full input device. I still cannot test any of it in actual glasses yet, but the devkit tells me the plumbing is right.
+
+<img width="2252" height="1384" alt="Screenshot 2026-09-15 165845" src="https://github.com/user-attachments/assets/f5e17215-4917-4873-820a-c5d374523cd4" />
+<img width="2196" height="1389" alt="Screenshot 2026-09-15 170004" src="https://github.com/user-attachments/assets/df9f8479-f76a-499f-8298-b5ec8c7b53be" />
+<img width="2161" height="1377" alt="Screenshot 2026-09-15 165905" src="https://github.com/user-attachments/assets/e774e61e-4e6c-4da3-9f9a-a4e22f7cbe72" />
+
+**Time Spent: 3 hours**
+
+
+# September 15: I finished the firmware.
+The last files were about power and behavior, and this is where the glasses became something wearable. The sleep files handle, well, sleep. It wakes on a voice comparator on its own pin, so only real sound can wake it, plus a timer guard that forces a wakeup after a long stretch of nothing. I chose that wake method on purpose. Anything that needs a button press can get woken up in a pocket. The touch files turn the touch pad into a button. A tap goes back to listening, a double tap saves a picture, and holding it for five seconds sleeps. Getting the gesture timing right took a few tries. The wake word files were the cool ones. The glasses listen for the word "jarvis" right on the device while the radio is off. I did not want any big model file, so I built a simple spotter from scratch. It makes acoustic features with an FFT, stores a template of the word, and matches it with a similarity score. You teach it three times over serial and it remembers. That one took the most head scratching, because I was building the whole thing by hand. Finally I made a selftest build that exercises every pin on the bench. If a part is not soldered right, it tells me in seconds. With power and behavior done, the firmware was basically complete, and the next steps will be on physical hardware.
+
+<img width="2310" height="1382" alt="Screenshot 2026-09-15 165510" src="https://github.com/user-attachments/assets/d0c6e828-6dce-43ce-b61b-23fc128932ec" />
+<img width="1713" height="1055" alt="Screenshot 2026-09-15 165524" src="https://github.com/user-attachments/assets/8822c9bb-97f7-4af0-a552-73fa948a00d8" />
+
+**Time Spent: 2 Hours**
+
+
+# September 15: I did a once over of the repo and submitted.
+Now that all my designing was complete I started doing a once over of everything to make sure it was ready for submission. That's when I realized I hadn't actually added an assembly image to the readme, so I reopened Fusion, snapped the picture, and slid it cleanly in. That also brought up the other little reminder that I had not yet updated the schematic to use labels instead of wires. For context, when I was first learning it I just used wires because that's what I thought the best option was, then I posted an image on slack asking for tips, when someone said I should really be using labels for it all. So that's what I did, really it wasn't difficult, it just took FOREVER because there were so many connections to redo(or at least it felt like forever because it was pretty dull work, I much prefer PCB to schematic fixes, all in all it was probably just an hour for that). After I got all that sorted out I threw an image of that in the readme as well, and then just double checked the full readme to ensure it was all set. After I was confident that was set up fine, I made a couple quick pricing updates to the BOM, and some quick changes to the spec file. Then the ARC-Insight 0 was designed and ready for submission and building!
+
+<img width="1706" height="784" alt="Screenshot 2026-09-15 171824" src="https://github.com/user-attachments/assets/d24d8e95-8af2-4235-9f09-d2d1f1d05a73" />
+
+**Time Spent: 1.5 Hours**
