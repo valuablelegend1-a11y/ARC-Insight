@@ -32,3 +32,6 @@ And when a newer firmware comes out, the cable stays in the drawer, you build th
 2. The code will not be all just written from memory for me for it all, I really am diving deep into this, but rest assured it will have some copy and paste from Google search, reddit snippets, or anything I need to make it work that I don't know.
 3. Version 0 of this project is designed to be mostly a peripheral to my AI assistant J.A.R.V.I.S., who is a custom made Generative Prompt Transformer(GPT) based off of NanoGPT by Andrej Karpathy, with added tools for things like image and object recognition, memory, web search, and much much more. For more detail on that I will soon be making a repo to document that journey and how the AI runs now.
 4. This is my first time designing a custom PCB, so forgive me if it is messy and not optimized, but I am quite proud of it and I think it will function how needed for this version.
+
+## Assembly:
+<img width="1706" height="784" alt="Screenshot 2026-09-15 171824" src="https://github.com/user-attachments/assets/44e00a12-33f3-43c5-b9a3-6ed2a03c01a7" />
