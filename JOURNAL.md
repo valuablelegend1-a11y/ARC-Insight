@@ -120,12 +120,12 @@ The next files I created were ota.py and stt.py. The file ota.py is the firmware
 **Time Spent: 2 Hours**
 
 
-# September 13: I finished out the rest of the glasses code.
+# September 13: I finished out the rest of the glasses python code.
 The remaining files were more of the same, config.py is just every knob in one place with defaults and a config.json to override bits, and glasses_tools.py is the box of tools I hang on Jarvis for glasses mode, like "what do you see" and "who is this" and "how am I feeling," each with a guard so he won't use the camera or heartbeat when the glasses aren't connected. But the best part, and honestly the coolest part of the whole glasses, was the emotion engine, and that one got me genuinely excited because the laptop can't do it. My desktop Jarvis has no idea how I'm feeling beyond what I say, but the glasses have a heartbeat sensor pressed against my skin, giving it a window into my nervous system none of my builds ever had. So the sentiment side has a hand-written lexicon of words ranked positive to negative, with negations and intensifiers, squished into one compound score. The heart side cleans the raw pulses and figures out my rate, how far it is above resting, words, and heartbeat, then ages them so old feelings fade. It also uses the fusion and engine files to handle that, and votes between calm, neutral, stressed, excited and sad, only committing after it holds a while so it doesn't flip-flop. And it tracks what signals pushed it there so Jarvis can say things like "you seem stressed; signals: raised heart rate, negative wording." That was the last of the real files, and with that, the code side was done.
 
 <img width="2063" height="1144" alt="Screenshot 2026-09-15 154024" src="https://github.com/user-attachments/assets/adc1cbfe-9939-4c7c-8130-f7c623ee9415" />
 <img width="1674" height="1083" alt="Screenshot 2026-09-15 154332" src="https://github.com/user-attachments/assets/0a691e60-d516-413e-b51e-92798df3cb22" />
-<img width="446" height="264" alt="Screenshot 2026-09-15 154324" src="https://github.com/user-attachments/assets/d0635b5b-11ec-4b6c-9c82-b4ae1f570e86" />
 <img width="1727" height="1102" alt="Screenshot 2026-09-15 154050" src="https://github.com/user-attachments/assets/1225756d-060f-417f-8512-ec071f6dd430" />
+<img width="446" height="264" alt="Screenshot 2026-09-15 154324" src="https://github.com/user-attachments/assets/d0635b5b-11ec-4b6c-9c82-b4ae1f570e86" />
 
 **Time Spent: 3.5 hours**
