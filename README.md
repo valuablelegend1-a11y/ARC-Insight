@@ -2,9 +2,9 @@
 
 ## What it is:
 
-ARC-Insight  is a pair of AI glasses. The frame carries a custom PCB with an onboard camera, mics, bone-conduction drivers behind the ears, and a heart-rate sensor. The glasses are a wearable "thin client": they capture audio, video, and sensors and stream them over Wi-Fi to Jarvis (my desktop AI assistant), who does the actual thinking and streams replies back through the bone conduction.
+ARC-Insight is a pair of AI glasses that directly connect to my homemade prompt transformer based AI: J.A.R.V.I.S. The frames carry the extensive payload of two bone conduction transducers for audio output, INMP441 and electret mics for audio input, a MAX30102 heart rate sensor for direct vitals tracking and emotion mapping, an OV2640 camera module for facial and object recognition, two 300mAh LiPo batteries for at least a full day of battery life at moderate usage, and to tie it all together; a custom ESP32-S3 based PCB!
 
-The goal is a personal assistant that lives on my face — face recognition, questions, and conversation, with the emotion of my heartbeat to tell whether I'm stressed or excited.
+The goal is a digital assistant that can come with me everywhere, while also expanding the abilities of Jarvis to do some things he couldn't from my desktop. He will be able to do things like answer personal questions, find search results, tell me what I'm holding or looking at, tell me who the person in front of me is, open up apps on my PC, start 3D prints, and even more. All while mapping my heartrate and speech patterns to respond with a genuine conversational feel through the GPT(NOT ChatGPT, they may have popularized the name GPT, but it just means a Generative Prompt Transformer, which is what Jarvis's speech is using).  
 
 ## How to use it:
 
@@ -29,9 +29,14 @@ And when a newer firmware comes out, the cable stays in the drawer, you build th
 ## Notes:
 
 1. This is the first version of this project, so some things will change in future versions, like for instance the code may be optimized to run everything locally on the device, but that is not yet(look at note 3 for more information).
-2. The code will not be all just written from memory for me for it all, I really am diving deep into this, but rest assured it will have some copy and paste from Google search, reddit snippets, or anything I need to make it work that I don't know.
+2. The code will not be all just written from memory for me for it all, I am still learning to code in general. That said, I really am diving deep into this, but it will still have some copy and paste from Google search, reddit snippets, or anything I need to make it work that I don't know.
 3. Version 0 of this project is designed to be mostly a peripheral to my AI assistant J.A.R.V.I.S., who is a custom made Generative Prompt Transformer(GPT) based off of NanoGPT by Andrej Karpathy, with added tools for things like image and object recognition, memory, web search, and much much more. For more detail on that I will soon be making a repo to document that journey and how the AI runs now.
 4. This is my first time designing a custom PCB, so forgive me if it is messy and not optimized, but I am quite proud of it and I think it will function how needed for this version.
 
 ## Assembly:
 <img width="1706" height="784" alt="Screenshot 2026-09-15 171824" src="https://github.com/user-attachments/assets/44e00a12-33f3-43c5-b9a3-6ed2a03c01a7" />
+
+##PCB:
+<img width="1713" height="364" alt="Screenshot 2026-09-08 150427" src="https://github.com/user-attachments/assets/24e48584-e2db-4fca-8ff0-b67618b69f50" />
+
+## Scehmatic:
