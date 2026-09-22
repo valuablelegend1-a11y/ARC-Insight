@@ -130,7 +130,7 @@ bool Link::sendBinary(uint8_t op, const uint8_t* data, size_t len) {
 
 void Link::sendText(const char* fmt, ...) {
   if (!impl_ || !stable_) return;
-  char buf[256];
+  char buf[1024];
   va_list ap;
   va_start(ap, fmt);
   vsnprintf(buf, sizeof(buf), fmt, ap);

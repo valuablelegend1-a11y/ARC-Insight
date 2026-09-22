@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "ancs.h"
 #include "arcinsight_config.h"
 #include "audio_io.h"
 #include "camera.h"
@@ -29,6 +30,11 @@ Heart gHeart;
 Camera gCamera;
 Touch gTouch;
 Kws gKws;
+#if ARCI_ANCS_ENABLE
+Ancs gAncs;
+Ancs::Msg gLastAncsMsg;
+bool gAncsMsgPending = false;
+#endif
 
 enum class DevState { Listen, Active };
 DevState gState = DevState::Listen;
@@ -147,6 +153,33 @@ void onJpeg(const uint8_t* jpeg, size_t len) {
     gLink.sendBinary((uint8_t)BinaryOp::ImageJpeg, jpeg, len);
   }
 }
+
+#if ARCI_ANCS_ENABLE
+void sendNotify(const Ancs::Msg& m) {
+  if (!gLink.connected()) return;
+  gLink.sendText("{\"type\":\"notify\",\"sample\":{\"uid\":%lu,\"cat\":%d,"
+                 "\"app\":\"%s\",\"source\":\"%s\",\"text\":\"%s\",\"ts\":%lu}}",
+                 (unsigned long)m.uid, (int)m.category, m.app, m.source,
+                 m.text, (unsigned long)(millis() / 1000));
+}
+
+void announceNotification(const Ancs::Msg& m) {
+  Serial.printf("[ancs] announce cat=%d app=%s source=%s text=%.48s\n",
+                (int)m.category, m.app, m.source, m.text);
+  gAudio.beep();
+  if (gState == DevState::Active) {
+    sendNotify(m);
+    return;
+  }
+  enterActive();
+  sendNotify(m);
+}
+
+void onAncsNotify(const Ancs::Msg& m) {
+  gLastAncsMsg = m;
+  gAncsMsgPending = true;
+}
+#endif
 
 void onBinary(uint8_t op, const uint8_t* data, size_t len) {
   switch ((BinaryOp)op) {
@@ -330,6 +363,11 @@ void setup() {
   gTouch.begin();
   gKws.begin();
 
+#if ARCI_ANCS_ENABLE
+  gAncs.setHandler(onAncsNotify);
+  gAncs.begin();
+#endif
+
   if (ARCI_KWS_ENABLE && !gKws.hasTemplate()) {
     Serial.println("[kws] no wake template yet: send \"cal_wake\" on serial");
   }
@@ -350,6 +388,14 @@ void loop() {
 
   gLink.loop();
   gAudio.poll();  // PCM goes to kws (listen) or the link (active)
+
+#if ARCI_ANCS_ENABLE
+  gAncs.poll();
+  if (gAncsMsgPending) {
+    gAncsMsgPending = false;
+    announceNotification(gLastAncsMsg);
+  }
+#endif
 
   if (gState == DevState::Active) {
     if (gLink.connected()) {

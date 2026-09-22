@@ -11,6 +11,70 @@ from arc_insight.server import GlassesServer
 _state = {}
 
 
+NOTIFY_CATEGORIES = {
+    0: "notification",
+    1: "call",
+    2: "missed call",
+    3: "voicemail",
+    4: "message",
+    5: "reminder",
+    6: "email",
+    7: "news",
+    8: "fitness",
+    9: "finance",
+    10: "location",
+    11: "entertainment",
+}
+
+_APP_NAMES = {
+    "com.apple.MobileSMS": "Messages",
+    "com.apple.mobilemail": "Mail",
+    "com.apple.Phone": "Phone",
+    "com.apple.FaceTime": "FaceTime",
+    "com.apple.Maps": "Maps",
+    "com.apple.calendar": "Calendar",
+}
+
+
+def _format_notification(sample, cfg):
+    notify_cfg = cfg.get("notify") or {}
+    label = NOTIFY_CATEGORIES.get(int(sample.get("cat") or 0), "notification")
+    app = (sample.get("app") or "").strip()
+    source = (sample.get("source") or "").strip()
+    text = (sample.get("text") or "").strip()
+    app_name = _APP_NAMES.get(app, app)
+    if source and source.lower() != app_name.lower() and source.lower() != app.lower():
+        sender = source
+    elif app_name:
+        sender = app_name
+    else:
+        sender = "your iphone"
+    max_chars = int(notify_cfg.get("max_text_chars") or 240)
+    if text and len(text) > max_chars:
+        text = text[:max_chars].rsplit(" ", 1)[0] + " ..."
+    if text:
+        return f"New {label} from {sender}. {text}"
+    if label == "call":
+        return f"Incoming call from {sender}."
+    return f"New {label} from {sender}."
+
+
+async def _handle_notification(sample, cfg, speaker):
+    notify_cfg = cfg.get("notify") or {}
+    if not notify_cfg.get("announce", True):
+        return
+    suppress = notify_cfg.get("suppress_categories") or []
+    if int(sample.get("cat") or 0) in suppress:
+        return
+    sentence = _format_notification(sample, cfg)
+    if not sentence:
+        return
+    try:
+        await speaker.say(sentence)
+    except Exception:
+        pass
+
+
 def install(speaker, main_module, config=None):
     cfg = config or load_config()
     emotion = None
@@ -22,6 +86,9 @@ def install(speaker, main_module, config=None):
     io = IOManager(cfg, emotion=emotion)
     server = GlassesServer(io, cfg)
     io.server = server
+
+    if cfg.get("notify", {}).get("enabled", True):
+        io.notification_handler = lambda sample: _handle_notification(sample, cfg, speaker)
 
     _patch_speaker(speaker, io, cfg)
     _patch_registry(io, cfg, emotion)

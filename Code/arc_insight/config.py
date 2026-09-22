@@ -36,6 +36,12 @@ DEFAULTS = {
         "screenshot_dir": "data/glasses",
         "face_distance_threshold": 0.5,
     },
+    "notify": {
+        "enabled": True,
+        "announce": True,
+        "suppress_categories": [],
+        "max_text_chars": 240,
+    },
 }
 
 

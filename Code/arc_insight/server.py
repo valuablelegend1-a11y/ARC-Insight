@@ -145,6 +145,12 @@ class GlassesServer:
                 sample = dict(sample)
                 sample.setdefault("timestamp", time.time())
                 self.io.store_hr(sample)
+        elif message_type == "notify":
+            notification = message.get("sample") or {}
+            if isinstance(notification, dict):
+                notification = dict(notification)
+                notification.setdefault("timestamp", time.time())
+                self.io.on_notification(notification)
         elif message_type == "tts_done":
             pass
 

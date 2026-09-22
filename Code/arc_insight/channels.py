@@ -18,6 +18,9 @@ class IOManager:
         self.latest_hr = None
         self.latest_hr_at = 0.0
         self.hr_history = deque(maxlen=400)
+        self.notifications = deque(maxlen=40)
+        self.notification_handler = None
+        self._seen_uids = deque(maxlen=256)
         self._client = False
         self._client_since = None
 
@@ -65,6 +68,35 @@ class IOManager:
                 self.emotion.ingest_hr(sample)
             except Exception:
                 pass
+
+    def on_notification(self, sample):
+        if not isinstance(sample, dict):
+            return
+        uid = sample.get("uid")
+        if uid is not None:
+            key = int(uid) & 0xFFFFFFFF
+            if key in self._seen_uids:
+                return
+            self._seen_uids.append(key)
+        entry = dict(sample)
+        entry.setdefault("timestamp", time.time())
+        self.notifications.append((entry["timestamp"], entry))
+        handler = self.notification_handler
+        if handler is None:
+            return
+        try:
+            if self.loop is not None and self.loop.is_running():
+                self.loop.create_task(self._run_handler(handler, entry))
+            else:
+                handler(entry)
+        except Exception:
+            pass
+
+    async def _run_handler(self, handler, sample):
+        try:
+            await handler(sample)
+        except Exception:
+            pass
 
     async def on_transcript(self, text, ts=None):
         ts = ts or time.time()

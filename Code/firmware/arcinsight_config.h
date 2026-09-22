@@ -15,6 +15,15 @@
 
 // On-device wake-word (Option A). The glasses rest in a low-power listen
 // state (Wi-Fi off) and only connect/stream after hearing "jarvis".
+// Apple Notification Center Service (ANCS): the glasses advertise as a BLE
+// peripheral, pair with an iPhone, then read incoming notifications over a
+// GATT client on the same link and relay them to the host (or beep + wake
+// the link when sitting idle in listen mode).
+#define ARCI_ANCS_ENABLE        1
+#define ARCI_ANCS_DEV_NAME      "ARC-INSIGHT"
+#define ARCI_ANCS_TITLE_MAX     64
+#define ARCI_ANCS_TEXT_MAX      220
+
 #define ARCI_KWS_ENABLE        1
 #define ARCI_KWS_THRESHOLD     0.68f
 #define ARCI_KWS_MIN_FRAMES    12
