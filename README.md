@@ -40,4 +40,5 @@ And when a newer firmware comes out, the cable stays in the drawer, you build th
 <img width="1713" height="364" alt="Screenshot 2026-09-08 150427" src="https://github.com/user-attachments/assets/24e48584-e2db-4fca-8ff0-b67618b69f50" />
 
 ## Scehmatic:
-<img width="2094" height="1400" alt="Screenshot 2026-09-15 195750" src="https://github.com/user-attachments/assets/40656ee6-cde4-4c1d-986a-5608d9644971" />
+<img width="2724" height="1809" alt="Screenshot 2026-10-03 145350" src="https://github.com/user-attachments/assets/db460197-0fc8-4c02-8f63-690b0aa80b8b" />
+
