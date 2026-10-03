@@ -3,11 +3,6 @@
 
 namespace arcv {
 
-// Frame-as-a-button gestures on the touch pad. Deep-sleep wake is voice-only;
-// this only ever runs while the device is awake.
-//   single tap   -> basic sleep (drop Wi-Fi back to listening)
-//   double tap   -> take a plain picture, saved by the PC (no AI)
-//   hold 5 s     -> deep sleep
 class Touch {
  public:
   enum class Gesture : uint8_t { None = 0, Tap, DoubleTap, Hold };
