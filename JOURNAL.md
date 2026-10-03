@@ -176,3 +176,12 @@ Now that all my designing was complete I started doing a once over of everything
 <img width="1706" height="784" alt="Screenshot 2026-09-15 171824" src="https://github.com/user-attachments/assets/d24d8e95-8af2-4235-9f09-d2d1f1d05a73" />
 
 **Time Spent: 1.5 Hours**
+
+
+# October 2: I updated the schematic.
+After the project got returned for some edits needed on the schematic, I got right to work fixing it all up. It only took a bit, because there were mostly some simple edits to do. The first thing was just to add some wires for the net labels, to make sure it was more readable and looked right. That wasn't hard just a little time consuming for all the connections. Then I added the pulldowns on my USBC CC pins as suggested, and got the ground wired to USBC shield. Then I simply removed L1 and cleaned that up so there were no issues with VCC. After that I updated the PCB from the schematic, fixed all the needed connections, then I ran DRC and worked through the errors. they were super simple, just two tolerance issues that I quickly fixed, and one naming problem that I just had to redo in the schematic and update the PCB from. After that I added all the fixed files to github, retook screenshots for the README, and got it ready for resubmission.
+
+<img width="1121" height="801" alt="Screenshot 2026-10-03 145746" src="https://github.com/user-attachments/assets/30ed05df-971c-4467-95bf-c455e21e9e22" />
+<img width="2724" height="1809" alt="Screenshot 2026-10-03 145350" src="https://github.com/user-attachments/assets/e6c5cf9e-98c1-4122-8013-b5a335f5b40f" />
+
+**Time Spent: 2.5 Hours**
