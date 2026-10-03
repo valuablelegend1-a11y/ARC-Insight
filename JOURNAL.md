@@ -184,4 +184,4 @@ After the project got returned for some edits needed on the schematic, I got rig
 <img width="1121" height="801" alt="Screenshot 2026-10-03 145746" src="https://github.com/user-attachments/assets/30ed05df-971c-4467-95bf-c455e21e9e22" />
 <img width="2724" height="1809" alt="Screenshot 2026-10-03 145350" src="https://github.com/user-attachments/assets/e6c5cf9e-98c1-4122-8013-b5a335f5b40f" />
 
-**Time Spent: 2.5 Hours**
+**Time Spent: 3 Hours**
