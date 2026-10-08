@@ -184,4 +184,13 @@ After the project got returned for some edits needed on the schematic, I got rig
 <img width="1121" height="801" alt="Screenshot 2026-10-03 145746" src="https://github.com/user-attachments/assets/30ed05df-971c-4467-95bf-c455e21e9e22" />
 <img width="2724" height="1809" alt="Screenshot 2026-10-03 145350" src="https://github.com/user-attachments/assets/e6c5cf9e-98c1-4122-8013-b5a335f5b40f" />
 
+**Time Spent: 2 Hours**
+
+
+# October 7: I did more schematic edits.
+So turns out I didn't completely understand the first reviewer when they asked me to do some edits, so it got returned again. Now thankfully I have a much clearer template of what I need to fix, so I could get right on the fixes. Most of the schematic work was simple, just moving things around, little bit of wiring, and some slight renaming for simplicity. There were a couple times where I had to redo the positioning of one component, and that in turn messed with another one, which just made the clutter worse. Thankfully it was all fixable and didn't take too much extra time. After the schematic was done I ran ERC and found zero errors, so then it was on to the PCB. Obviously the first thing I did was update from schematic, then I ran DRC to see what I was working with. I was mortified to find that there were *59 errors*. That really just absolutely shocked me and I had no idea where even to start. But I slowly started to work through them, and that's when I realized that some of the errors were because the two pads of a resistor or a capacitor were reversed. That led me to discover that I had accidentally flipped a couple components around in the schematic, changing what pins each of the wires or labels were connected to, and since the schematic doesn't show pin numbers for resistors and caps I had no idea. Thankfully this meant that literally all of the errors were due to this issue, and Y1 itself somehow was managing to cause 38 of the errors just by being reversed. So I flipped all the components the right way, reran DRC, and was pleased to find 0 errors. While I was already editing the PCB I did decide to add a silkscreen on the bottom just of the project PCB name, and myself as the designer. Then I got all the correct files added to the repo, exported the gerbers, cpl, and bom files and I was ready for another submission.
+
+<img width="816" height="554" alt="Screenshot 2026-10-07 205109" src="https://github.com/user-attachments/assets/cb265c56-d2b6-4af1-ba58-f35af6e062ec" />
+<img width="596" height="122" alt="Screenshot 2026-10-07 204929" src="https://github.com/user-attachments/assets/e3fb507d-7f2f-4d82-b2ea-633208b6dce4" />
+
 **Time Spent: 3 Hours**
