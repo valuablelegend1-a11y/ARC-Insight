@@ -1,12 +1,12 @@
 %TF.GenerationSoftware,KiCad,Pcbnew,10.0.5*%
-%TF.CreationDate,2026-10-03T18:15:12-05:00*%
+%TF.CreationDate,2026-10-07T20:36:20-05:00*%
 %TF.ProjectId,arc-insight-board,6172632d-696e-4736-9967-68742d626f61,rev?*%
 %TF.SameCoordinates,Original*%
 %TF.FileFunction,Glue,Top*%
 %TF.FilePolarity,Positive*%
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW 10.0.5) date 2026-10-03 18:15:12*
+G04 Created by KiCad (PCBNEW 10.0.5) date 2026-10-07 20:36:20*
 %MOMM*%
 %LPD*%
 G01*
