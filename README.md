@@ -36,9 +36,17 @@ And when a newer firmware comes out, the cable stays in the drawer, you build th
 ## Assembly:
 <img width="1706" height="784" alt="Screenshot 2026-09-15 171824" src="https://github.com/user-attachments/assets/44e00a12-33f3-43c5-b9a3-6ed2a03c01a7" />
 
-## PCB:
-<img width="1713" height="364" alt="Screenshot 2026-09-08 150427" src="https://github.com/user-attachments/assets/24e48584-e2db-4fca-8ff0-b67618b69f50" />
 
 ## Scehmatic:
-<img width="2724" height="1809" alt="Screenshot 2026-10-03 145350" src="https://github.com/user-attachments/assets/db460197-0fc8-4c02-8f63-690b0aa80b8b" />
+<img width="816" height="554" alt="Screenshot 2026-10-07 205109" src="https://github.com/user-attachments/assets/1ab40e9b-9193-4686-8cbd-28417aca8cc0" />
+
+## PCB:
+<img width="596" height="122" alt="Screenshot 2026-10-07 204929" src="https://github.com/user-attachments/assets/4bb66587-4391-46fa-8071-0a99d3cbc88d" />
+
+
+## PCB Render:
+<img width="479" height="108" alt="Screenshot 2026-10-07 205037" src="https://github.com/user-attachments/assets/26d4ae59-50a7-41ca-97a0-c89a6d7110ec" />
+
+
+
 
