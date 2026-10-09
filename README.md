@@ -41,7 +41,7 @@ And when a newer firmware comes out, the cable stays in the drawer, you build th
 <img width="816" height="554" alt="Screenshot 2026-10-07 205109" src="https://github.com/user-attachments/assets/1ab40e9b-9193-4686-8cbd-28417aca8cc0" />
 
 ## PCB:
-<img width="596" height="122" alt="Screenshot 2026-10-07 204929" src="https://github.com/user-attachments/assets/4bb66587-4391-46fa-8071-0a99d3cbc88d" />
+<img width="591" height="124" alt="Screenshot 2026-10-09 103325" src="https://github.com/user-attachments/assets/0ff43f1d-13c5-4fc0-b580-76ea37b3d913" />
 
 
 ## PCB Render:
