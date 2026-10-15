@@ -2471,7 +2471,7 @@
 	(footprint "Package_TO_SOT_SMD:SOT-23-5"
 		(layer "F.Cu")
 		(uuid "30d3a830-dbc5-49e6-a2df-523db31a5623")
-		(at 139.3625 123.05 90)
+		(at 139.3625 123.05 270)
 		(descr "SOT, 5 Pin (JEDEC MO-178 Var AA https://www.jedec.org/document_search?search_api_views_fulltext=MO-178)")
 		(tags "SOT TO_SOT_SMD")
 		(property "Reference" "U6"
