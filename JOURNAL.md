@@ -194,3 +194,21 @@ So turns out I didn't completely understand the first reviewer when they asked m
 <img width="596" height="122" alt="Screenshot 2026-10-07 204929" src="https://github.com/user-attachments/assets/e3fb507d-7f2f-4d82-b2ea-633208b6dce4" />
 
 **Time Spent: 3 Hours**
+
+
+# October 15: I ordered most of the parts.
+I finally got my design approved so I got ready to order the parts! I first reconfirmed everything I would need and made sure the prices were the same, then I got to ordering the hack club grants to pay for it all. Once those came in, I went through the simple process of checkout, and got everything but the PCB ordered. Most of the AliExpress stuff was estimated at 2 weeks to arrival, and the SameSky electret was about 1.5 weeks estimated. However the antenna was from Amazon so that was like 5 days until arrival. Then I started working more in depth on getting exact pricing for the PCB, which I had been trying to do for the past week. I set up the files in JLCPCB, but total cost was initially like $140 USD which was a little steep. Since PCBWay seemed like maybe the cost would be a little cheaper, I uploaded there as well and got ready to wait for them to verify before they could even give me a quote. I also discovered Rush PCB, which seemed like an interesting and vetted option, so I uploaded the files there as well.
+
+<img width="1290" height="2796" alt="IMG_3155" src="https://github.com/user-attachments/assets/0ceeed90-ed94-4150-88fd-f8a53f7d98d5" />
+<img width="1290" height="2796" alt="IMG_3149" src="https://github.com/user-attachments/assets/5e714a63-3d9b-4284-91e4-bd86aad7bd7e" />
+
+**Time Spent: 1.5 Hours**
+
+
+# October 17: I worked on the PCB.
+I ended up getting an email from PCBWay letting me know that they could not proceed to quote my PCB since there were some issues with the files. It turns out I had messed up the footprints for two capacitors and a resistor, so I would need to redo them before proceeding. I got to work on fixing them right away, and during the process I found a couple more small issues with the parts I had selected, so that led to a lot more edits on the PCB. The big one was that the ESP32 package I had used was actually the wrong one and it would not have in package flash, meaning I could not upload any of my firmware. And the second big issue was that Y1(the crystal) was he wrong one as well, and needed to be completely replaced. Since they were mostly simple fixes I thought it would be simple, but in reality it took a long time to get it resituated since the new Y1 footprint was quite a bit bigger, which meant rerouting a lot more traces to try to get everything to fit. Once I finally got both of those done, and I was able to fix the caps and resistors quick, then I started on DRC. Overall there weren't too many issues, a couple slight obstructions and some tolerances and a silkscreen issue, but before too long I got it all nailed down to 0 erros and 3 warning, all of which were for the massive silkscreen on the bottom that was touching some vias. Then I reexported all the files like usual, and reuploaded to PCBWay to wait to hear my quote.
+
+<img width="918" height="393" alt="Screenshot 2026-10-24 130911" src="https://github.com/user-attachments/assets/6dfb4496-d978-4023-bd35-f6884ec6da41" />
+<img width="777" height="593" alt="Screenshot 2026-10-24 130730" src="https://github.com/user-attachments/assets/f3a1906d-095b-482b-9453-0a3a40f070cd" />
+
+**Time Spent: 3 Hours**
