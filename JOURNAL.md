@@ -212,3 +212,20 @@ I ended up getting an email from PCBWay letting me know that they could not proc
 <img width="777" height="593" alt="Screenshot 2026-10-24 130730" src="https://github.com/user-attachments/assets/f3a1906d-095b-482b-9453-0a3a40f070cd" />
 
 **Time Spent: 3 Hours**
+
+
+# October 20: I got my first part in.
+Today the first part for my project came in: the antenna. Really it is a super simple component and rather a last minute rendition, but nonetheless it's still a very important piece and it was very exciting to see the first fruits of all my efforts. I also finally heard back from Rush PCB, only for them to not actually even give me a set cost quote, just the file setups. So I emailed them asking for the actual cost, and they finally got back to me just to tell me that it would cost 1800 DOLLARS!? Not really sure what was up there and I think I may have misentered some information or something because wow. So I decided to just politely turn them down and wait to compare JLC and PCBWay. While I was waiting I did check out the board render in JLC, and realized a couple components were out of place or rotated the wrong way. So I spent some time working through that by editing the CPL, and after not too long they were all positioned correctly.
+
+<img width="1380" height="297" alt="Screenshot 2026-10-24 143546" src="https://github.com/user-attachments/assets/0dcaa26a-c961-4bdf-bca6-d92c6fb3f88c" />
+
+**Time Spent: 1 Hour**
+
+
+# October 23: I ordered the PCB and got my next part in.
+So I finally heard back from PCBWay about a quote, only for them to tell me the price would be like one dollar more expensive, except that they couldn't make the solder mask black due to tolerances. So that made my decision for me, and I got ready to order through JLCPBC. I finalized the total there, and put in my hack club grant request that would use all the rest of my credit and barely cover the PCB, then I just had to pray no costs shifted while I waited. The grant was approved later that day, and I got ready to order, when I realized that the costs hadn't changed, but there was an extra fee that was added on, the board an assembly plus shipping and customs were the same, but there was another charge added on on the last page of the transaction. So I scrambled to find  a way to cover it, and since it was only $5 more I thought it would be easy, but I had already applied the one coupon per order from JLC, and I couldn't find any promo codes to add on to it. In a last ditch effort I messaged on the Hack Club slack and asked if anyone could merge the main grant I had with another older one that had a little left on it, even though it was already almost midnight. And to my surprise someone actually responded! They double checked the ones I wanted merged and got them all set up. Then there was nothing left to do but place the order! Since I was getting assembly there was free 24h PCB building, and assembly itself should only be 3 days, and shipping was required to be 3 day shipping for orders over $50, so hopefully it should be in by next week. I also finally got my electret mic in today, which was interesting because I never got an email letting me know it was delivered, I just happened to check the tracking and saw it had been dropped off, so now I have the next part ready too.
+
+<img width="1380" height="297" alt="Screenshot 2026-10-24 143546" src="https://github.com/user-attachments/assets/5661b661-6459-4534-a9c8-90444962d516" />
+<img width="4284" height="5712" alt="IMG_3191" src="https://github.com/user-attachments/assets/f5d5ff57-3299-46a5-8a77-20ccd46b554f" />
+
+**Time Spent: 2 Hours**
